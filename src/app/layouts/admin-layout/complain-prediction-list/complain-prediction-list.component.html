@@ -1,0 +1,34 @@
+<div class="main-content">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-12">
+              <div class="card">
+                  <div class="card-header card-header-danger">
+                      <h4 class="card-title ">Modelos de predição</h4>
+                      <p class="card-category">Lista de modelos preditivos para obtenção de notas do reclame aqui</p>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <table class="table table-hover">
+                            <thead class="">
+                                <th>Nome</th>
+                                <th>Categoria</th>
+                                <th>Desvio médio</th>
+                                <th>Porcentagem de acerto</th>
+                              </thead>
+                              <tbody>
+                                <tr *ngFor="let model of predictionModels" [routerLink]="['/prediction-model', model.id, 'predictions']">
+                                    <td>{{model.modelName}}</td>
+                                    <td>{{model.modelCategory}}</td>
+                                    <td>{{model.meanResidualDeviance}}</td>
+                                    <td>{{model.hitPercentage}}</td>
+                                </tr>
+                              </tbody>
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

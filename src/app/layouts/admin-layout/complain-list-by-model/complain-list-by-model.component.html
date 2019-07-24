@@ -1,0 +1,37 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title ">Ultimas reclamações</h4>
+                        <p class="card-category">Lista de reclamções</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                              <thead class="">
+                                  <th>Nome</th>
+                                  <th>Descrição</th>
+                                  <th>Cidade</th>
+                                  <th>Estado</th>
+                                  <th>Predição</th>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let model of complains" [routerLink]="['/complains', model.id, 'predictions']">
+                                      <td>{{model.title}}</td>
+                                      <td [innerHTML]="model.description"></td>
+                                      <td>{{model.userCity}}</td>
+                                      <td>{{model.userState}}</td>
+                                      <td>{{model.predictedScore | number:'1.2-2'}}</td>
+                                  </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  
