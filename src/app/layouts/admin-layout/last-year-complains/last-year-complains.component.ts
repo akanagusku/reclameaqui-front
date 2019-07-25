@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-last-year-complains',
@@ -15,18 +16,18 @@ export class LastYearComplainsComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/complain/last-year-overview").subscribe((models: []) => {
-      let reversedModels = models.reverse();
+    this.httpClient.get(`${environment.BACKEND_URL}complain/last-year-overview`).subscribe((models: []) => {
+      const reversedModels = models.reverse();
       this.quantityMonthYears = reversedModels;
-      let months = this.quantityMonthYears.map((quantityMonthYear) => {
+      const months = this.quantityMonthYears.map((quantityMonthYear) => {
         return moment().month(quantityMonthYear.month).format('MMMM').slice(0, 1);
       });
-      let quantities = this.quantityMonthYears.map((quantityMonthYear) => quantityMonthYear.quantity) || [];
-      let datawebsiteViewsChart = {
+      const quantities = this.quantityMonthYears.map((quantityMonthYear) => quantityMonthYear.quantity) || [];
+      const datawebsiteViewsChart = {
         labels: months,
         series: [quantities]
       };
-      let optionswebsiteViewsChart = {
+      const optionswebsiteViewsChart = {
         lineSmooth: Chartist.Interpolation.cardinal({
           tension: 0
         }),
@@ -38,7 +39,7 @@ export class LastYearComplainsComponent implements OnInit {
           return Math.max(a, b)
         }),
       };
-      var responsiveOptions: any[] = [
+      const responsiveOptions: any[] = [
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
           axisX: {
@@ -48,14 +49,13 @@ export class LastYearComplainsComponent implements OnInit {
           }
         }]
       ];
-      var websiteViewsChart = new Chartist.Line('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
+      const websiteViewsChart = new Chartist.Line('#websiteViewsChart', datawebsiteViewsChart, optionswebsiteViewsChart, responsiveOptions);
 
-      //start animation for the Emails Subscription Chart
       this.startAnimationForLineChart(websiteViewsChart);
     });
   }
 
-  startAnimationForLineChart(chart){
+  startAnimationForLineChart(chart) {
     let seq: any, delays: any, durations: any;
     seq = 0;
     delays = 80;

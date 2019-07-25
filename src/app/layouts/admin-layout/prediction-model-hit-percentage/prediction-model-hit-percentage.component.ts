@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-prediction-model-hit-percentage',
@@ -7,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./prediction-model-hit-percentage.component.css']
 })
 export class PredictionModelHitPercentageComponent implements OnInit {
+  hitPercentage = 0;
 
   constructor(private httpClient: HttpClient) { }
 
-  hitPercentage = 0;
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/prediction-models/champion/hit-percentage").subscribe((percent: number) => {
+    this.httpClient.get(`${environment.BACKEND_URL}prediction-models/champion/hit-percentage`).subscribe((percent: number) => {
       this.hitPercentage = percent;
     });
   }

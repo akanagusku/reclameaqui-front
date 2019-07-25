@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-complain-list',
@@ -15,7 +16,7 @@ export class ComplainListByModelComponent implements OnInit {
     private route: ActivatedRoute) { }
   ngOnInit() {
     this.modelId = this.route.snapshot.paramMap.get('modelId');
-    this.httpClient.get("http://localhost:8080/prediction-models/" + this.modelId + "/predictions").subscribe((resComplains: []) => {
+    this.httpClient.get(`${environment.BACKEND_URL}prediction-models/${this.modelId}/predictions`).subscribe((resComplains: []) => {
       this.complains = resComplains;
     });
   }

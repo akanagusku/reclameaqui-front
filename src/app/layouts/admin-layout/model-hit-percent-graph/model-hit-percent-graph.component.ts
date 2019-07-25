@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-model-hit-percent-graph',
@@ -14,17 +15,17 @@ export class ModelHitPercentGraphComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/prediction-models").subscribe((resPredictionModels: []) => {
-      this.predictionModels = resPredictionModels.slice(0,10);
-      let modelNames = this.predictionModels.map((predictionModel) => {
+    this.httpClient.get(`${environment.BACKEND_URL}prediction-models`).subscribe((resPredictionModels: []) => {
+      this.predictionModels = resPredictionModels.slice(0, 10);
+      const modelNames = this.predictionModels.map((predictionModel) => {
         return predictionModel.modelName.slice(0, 3);
       });
-      let percents = this.predictionModels.map((quantityMonthYear) => quantityMonthYear.hitPercentage) || [];
-      let datadailySalesChart = {
+      const percents = this.predictionModels.map((quantityMonthYear) => quantityMonthYear.hitPercentage) || [];
+      const datadailySalesChart = {
         labels: modelNames,
         series: [percents]
       };
-      let optionsdailySalesChart = {
+      const optionsdailySalesChart = {
         axisX: {
           showGrid: false
         },
@@ -36,7 +37,7 @@ export class ModelHitPercentGraphComponent implements OnInit {
         }),
         chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
       };
-      var responsiveOptions: any[] = [
+      const responsiveOptions: any[] = [
         ['screen and (max-width: 640px)', {
           seriesBarDistance: 5,
           axisX: {
@@ -46,9 +47,8 @@ export class ModelHitPercentGraphComponent implements OnInit {
           }
         }]
       ];
-      var dailySalesChart = new Chartist.Bar('#dailySalesChart', datadailySalesChart, optionsdailySalesChart, responsiveOptions);
+      const dailySalesChart = new Chartist.Bar('#dailySalesChart', datadailySalesChart, optionsdailySalesChart, responsiveOptions);
 
-      //start animation for the Emails Subscription Chart
       this.startAnimationForBarChart(dailySalesChart);
     });
   }

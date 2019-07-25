@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as Chartist from 'chartist';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-complain-creation-answer-datediff',
@@ -12,7 +13,7 @@ export class ComplainCreationAnswerDatediffComponent implements OnInit {
   complainsDiff = [];
   constructor(private httpClient: HttpClient) { }
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/complain/creation-answer-date-diff").subscribe((resComplains: []) => {
+    this.httpClient.get(`${environment.BACKEND_URL}complain/creation-answer-date-diff`).subscribe((resComplains: []) => {
       this.complainsDiff = resComplains;
       let quantities = this.complainsDiff.map((complain) => complain.quantity);
 

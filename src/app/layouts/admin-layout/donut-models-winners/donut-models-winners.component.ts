@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-donut-models-winners',
@@ -13,14 +14,14 @@ export class DonutModelsWinnersComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/prediction-models/competition-results").subscribe((resCompetitors: any[]) => {
+    this.httpClient.get(`${environment.BACKEND_URL}prediction-models/competition-results`).subscribe((resCompetitors: any[]) => {
       this.competitors = resCompetitors;
       this.competitors = this.competitors.sort((a,b) => b.quantity-a.quantity);
-      var data = {
+      const data = {
         series: this.competitors.map((competitor) => competitor.quantity)
       };
 
-      var sum = function (a, b) { return a + b };
+      const sum = function (a, b) { return a + b };
 
       new Chartist.Pie('#donutModelCompetition', data, {
         labelInterpolationFnc: function (value) {

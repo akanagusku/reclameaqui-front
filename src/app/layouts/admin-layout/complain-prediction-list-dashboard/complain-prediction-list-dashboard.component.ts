@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 declare var google: any;
 
 @Component({
@@ -14,7 +15,7 @@ export class ComplainPredictionListDashboardComponent implements OnInit {
 
 
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/complain/quantity-by-state").subscribe((resComplainsByState: []) => {
+    this.httpClient.get(`${environment.BACKEND_URL}complain/quantity-by-state`).subscribe((resComplainsByState: []) => {
       this.complainsByState = resComplainsByState;
 
       google.setOnLoadCallback(this.drawRegionsMap(this.complainsByState));

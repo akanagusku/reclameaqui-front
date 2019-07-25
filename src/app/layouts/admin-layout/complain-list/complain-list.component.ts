@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-complain-list',
@@ -11,7 +12,7 @@ export class ComplainListComponent implements OnInit {
   complains = [];
   constructor(private httpClient: HttpClient) { }
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/complains").subscribe((resComplains: []) => {
+    this.httpClient.get(`${environment.BACKEND_URL}complains`).subscribe((resComplains: []) => {
       this.complains = resComplains;
     });
   }

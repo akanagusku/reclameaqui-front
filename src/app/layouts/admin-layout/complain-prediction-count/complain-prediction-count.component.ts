@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-complain-prediction-count',
@@ -7,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./complain-prediction-count.component.css']
 })
 export class ComplainPredictionCountComponent implements OnInit {
+  complainPredictionCount = 0;
 
   constructor(private httpClient: HttpClient) { }
 
-  complainPredictionCount = 0;
   ngOnInit() {
-    this.httpClient.get("http://localhost:8080/complain-predictions/count").subscribe((count: number) => {
+    this.httpClient.get(`${environment.BACKEND_URL}complain-predictions/count`).subscribe((count: number) => {
       this.complainPredictionCount = count;
     });
   }
